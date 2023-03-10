@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Table Conversion</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Table Conversion</h2>
+    <p>Paste your table in the textarea below:</p>
+    <textarea id="input-table" rows="10" cols="50"></textarea>
+    <button onclick="convertTable()">Convert Table</button>
+    <div style="margin-top: 60px" id="output-table"></div>
+
+    <script>
+      function convertTable() {
+        var inputTable = document.getElementById('input-table').value
+        var parser = new DOMParser()
+        var table = parser
+          .parseFromString(inputTable, 'text/html')
+          .querySelector('table')
+
+        var programHeader = table.rows[0].cells[0].innerHTML
+        var diplomaHeader = table.rows[0].cells[1].innerHTML
+        var gradeHeader = table.rows[0].cells[2].innerHTML
+
+        var masterHeader = table.rows[1].cells[0].innerHTML
+        var doctorateHeader = table.rows[2].cells[0].innerHTML
+
+        var outputTable =
+          '<table><thead><tr><th>' +
+          programHeader +
+          '</th><th>' +
+          diplomaHeader +
+          '</th><th>' +
+          gradeHeader +
+          '</th></tr></thead><tbody>'
+        outputTable +=
+          '<tr><th>' +
+          masterHeader +
+          '</th><td>' +
+          table.rows[1].cells[1].innerHTML +
+          '</td><td>' +
+          table.rows[1].cells[2].innerHTML +
+          '</td></tr>'
+        outputTable +=
+          '<tr><th>' +
+          doctorateHeader +
+          '</th><td>' +
+          table.rows[2].cells[1].innerHTML +
+          '</td><td>' +
+          table.rows[2].cells[2].innerHTML +
+          '</td></tr>'
+        outputTable += '</tbody></table>'
+
+        document.getElementById('output-table').innerHTML = outputTable
+      }
+    </script>
+  </body>
+</html>
