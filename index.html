@@ -18,7 +18,8 @@
     <p>Paste your table in the textarea below:</p>
     <textarea id="input-table" rows="10" cols="50"></textarea>
     <button onclick="convertTable()">Convert Table</button>
-    <div style="margin-top: 60px" id="output-table"></div>
+    <button onclick="copyTable()">Copy Table</button>
+    <div id="output-table"></div>
 
     <script>
       function convertTable() {
@@ -62,6 +63,15 @@
         outputTable += '</tbody></table>'
 
         document.getElementById('output-table').innerHTML = outputTable
+      }
+
+      function copyTable() {
+        var range = document.createRange()
+        range.selectNode(document.getElementById('output-table'))
+        window.getSelection().removeAllRanges()
+        window.getSelection().addRange(range)
+        document.execCommand('copy')
+        alert('Table copied to clipboard!')
       }
     </script>
   </body>
